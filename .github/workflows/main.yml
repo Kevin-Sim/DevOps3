@@ -22,7 +22,7 @@ jobs:
       - name: view logs
         run: docker logs devopscontainer
       - name: Copy Output
-        run: docker container cp sem_employees_app_1:./tmp/output ./
+        run: docker container cp devopscontainer:./tmp/output ./
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4.2.5
         with:

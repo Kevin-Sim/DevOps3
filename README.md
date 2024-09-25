@@ -20,6 +20,17 @@ copy from container back to local file system
 docker cp <container id>:/tmp/output/ ./output
 ```
 
+and do the same in actions and copy to new branch
+
+```yml
+      - name: Copy Output
+        run: docker container cp sem_employees_app_1:./tmp/output ./
+      - name: Deploy
+        uses: JamesIves/github-pages-deploy-action@v4.2.5
+        with:
+          branch: output # The branch the action should deploy to.
+          folder: output # The folder we are copying
+```
 
 ![workflow](https://github.com/Kevin-Sim/DevOps3/actions/workflows/main.yml/badge.svg)
 
