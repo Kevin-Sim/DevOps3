@@ -21,10 +21,3 @@ jobs:
         run: docker run --name devopscontainer devopsimage
       - name: view logs
         run: docker logs devopscontainer
-      - name: Copy Output
-        run: docker container cp devopscontainer:./tmp/output ./
-      - name: Deploy
-        uses: JamesIves/github-pages-deploy-action@v4.2.5
-        with:
-          branch: output # The branch the action should deploy to.
-          folder: output # The folder we are copying
