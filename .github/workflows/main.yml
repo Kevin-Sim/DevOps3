@@ -16,6 +16,7 @@ jobs:
       - name: Package with Maven
         run: mvn package
       - name: Run docker compose
-        run: docker-compose up --abort-on-container-exit
+        run:
+          docker-compose up --abort-on-container-exit
       - name: view logs
         run: docker logs devopscontainer
