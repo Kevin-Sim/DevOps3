@@ -32,15 +32,15 @@ New projects are started by default on a branch called *main* but IntelliJ uses 
 
 Now we can create a new repository. In GitHub, you will see a **+** near the top of the page, which you can select **New repository** from:
 
-![GitHub New Repository](img/github-new-repo.png)
+![GitHub New Repository](C:/Users/KevL/Dropbox/Teaching/2024-2025-01-SET09823%20DevOps%20Global%20Online/SET09803-DevOps-Global-Online/labs/Lab01Quick/img/github-new-repo.png)
 
 This will open a new window.  You need to enter the name for the repository (`devops or whatever you like`), make sure the repository is **Public** and then select the **Apache 2.0** license type. and add a **README.md** file. Details are illustrated below: A md file is a markdown file which gives a quick and easy way to generate web pages from simple text. Have a look at this file in a text editor.
 
-![GitHub Repository Details](img/github-repo-options.png)
+![GitHub Repository Details](C:/Users/KevL/Dropbox/Teaching/2024-2025-01-SET09823%20DevOps%20Global%20Online/SET09803-DevOps-Global-Online/labs/Lab01Quick/img/github-repo-options.png)
 
 Click on **Create repository** and you will be presented with the following:
 
-![GitHub Repository Main Screen](img/github-repo-main.png)
+![GitHub Repository Main Screen](C:/Users/KevL/Dropbox/Teaching/2024-2025-01-SET09823%20DevOps%20Global%20Online/SET09803-DevOps-Global-Online/labs/Lab01Quick/img/github-repo-main.png)
 
 ## Git Setup
 
@@ -48,7 +48,7 @@ Git is incorporated into IntelliJ but I find it easier to use it from the comman
 
 Once installed you can create a new Git Command line window by right clicking in a folder or on the desktop and selecting 
 
-![GitHub Command Line](img/gitbash.png)
+![GitHub Command Line](C:/Users/KevL/Dropbox/Teaching/2024-2025-01-SET09823%20DevOps%20Global%20Online/SET09803-DevOps-Global-Online/labs/Lab01Quick/img/gitbash.png)
 
 
 
@@ -58,7 +58,7 @@ For example ```git clone https://github.com/Kevin-Sim/devops.git```
 
 You might have to set up permissions the first time you do this but this should happen only once.
 
-![GitHub Command Line](img/gitcom.png)
+![GitHub Command Line](C:/Users/KevL/Dropbox/Teaching/2024-2025-01-SET09823%20DevOps%20Global%20Online/SET09803-DevOps-Global-Online/labs/Lab01Quick/img/gitcom.png)
 
 
 
@@ -66,7 +66,7 @@ This will create a folder called devops on your machine and copy the contents of
 
 
 
-![Cloned repository](img/gitwin.png)
+![Cloned repository](C:/Users/KevL/Dropbox/Teaching/2024-2025-01-SET09823%20DevOps%20Global%20Online/SET09803-DevOps-Global-Online/labs/Lab01Quick/img/gitwin.png)
 
 Note the .git folder which contains information about the repository including a copy off all previous versions of files. This is hidden by default. You can show on Windows using ```view --> show hidden items```
 
