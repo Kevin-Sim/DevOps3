@@ -18,4 +18,4 @@ jobs:
       - name: Run docker compose
         run: docker compose up --abort-on-container-exit
       - name: view logs
-        run: docker logs devopscontainer
+        run: docker logs devops3_app_1
