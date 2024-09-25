@@ -1,0 +1,15 @@
+version: '3'
+services:
+  # Build app from Dockerfile in same folder as this file which is indicated by
+  # the full stop
+  app:
+    build: .
+
+  # Build the db as name world from the Dockerfile in the db folder
+  world:
+    build: db/.
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    # keep port forwarding so we can test app locally without docker
+    ports:
+      - "33060:3306"

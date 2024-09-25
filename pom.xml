@@ -32,7 +32,7 @@
                     <finalName>devops</finalName>
                     <archive>
                         <manifest>
-                            <mainClass>com.napier.devops.Main</mainClass>
+                            <mainClass>com.napier.devops.App</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>
