@@ -22,7 +22,9 @@ jobs:
       - name: Copy Output
         run: docker container cp devops3-app-1:./tmp/output ./
       - name: List dirs
-        run: ls
+        run: |
+          pwd
+          ls
       # - name: Deploy
       #   uses: JamesIves/github-pages-deploy-action@v4.2.5
       #   with:
