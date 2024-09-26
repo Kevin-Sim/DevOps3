@@ -20,7 +20,7 @@ jobs:
       - name: view logs
         run: docker logs devops3-app-1
       - name: Copy Output
-        run: docker container cp devops3-app-1:./output ./
+        run: docker container cp devops3-app-1:./tmp/output ./
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4.2.5
         with:
