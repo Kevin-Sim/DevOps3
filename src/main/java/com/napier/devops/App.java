@@ -43,9 +43,9 @@ public class App {
 				Integer population = rset.getInt("population");
 				sb.append(name + "\t" + population + "\r\n");
 			}
-			new File("./tmp/").mkdir();
+			new File("./output/").mkdir();
 			BufferedWriter writer = new BufferedWriter(
-					new FileWriter(new File("./tmp/report1.txt")));
+					new FileWriter(new File("./output/report1.txt")));
 			writer.write(sb.toString());
 			writer.close();
 			System.out.println(sb.toString());
@@ -53,14 +53,7 @@ public class App {
 			System.out.println(e.getMessage());
 			System.out.println("Failed to get details");
 			return;
-		}
-		// write to file
-		new File("./output/").mkdir();
-		BufferedWriter writer = new BufferedWriter(
-				new FileWriter(new File("./tmp/report1.txt")));
-		writer.write(sb.toString());
-		writer.close();
-		System.out.println(sb.toString());
+		}				
 	}
 
 	/**
