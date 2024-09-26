@@ -25,15 +25,15 @@ jobs:
         run: |
           pwd
           ls
-      - name: Deploy1
-        uses: JamesIves/github-pages-deploy-action@v4.2.5
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: output1 # The branch the action should deploy to.
-          folder: output # The folder we are copying
+      # - name: Deploy1
+      #   uses: JamesIves/github-pages-deploy-action@v4.2.5
+      #   with:
+      #     github_token: ${{ secrets.GITHUB_TOKEN }}
+      #     branch: output1 # The branch the action should deploy to.
+      #     folder: output # The folder we are copying
       - name: Deploy2
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./output
+          publish_dir: ./
           publish_branch: output2
