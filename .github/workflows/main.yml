@@ -21,8 +21,14 @@ jobs:
         run: docker logs devops3-app-1
       - name: Copy Output
         run: docker container cp devops3-app-1:./tmp/output ./
+      # - name: Deploy
+      #   uses: JamesIves/github-pages-deploy-action@v4.2.5
+      #   with:
+      #     branch: output # The branch the action should deploy to.
+      #     folder: output # The folder we are copying
       - name: Deploy
-        uses: JamesIves/github-pages-deploy-action@v4.2.5
+        uses: peaceiris/actions-gh-pages@v3
         with:
-          branch: output # The branch the action should deploy to.
-          folder: output # The folder we are copying
+          # github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./output
+          publish_branch: output
