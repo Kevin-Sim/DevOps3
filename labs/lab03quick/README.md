@@ -358,3 +358,60 @@ So change the View Logs entry in the actions script to
   - name: view logs
     run: docker logs devops3-app-1
 ```
+
+We can also add actions to copy the report we generated inside docker back to a branch on our repository
+
+```yaml
+        - name: Copy Output
+        run: docker container cp devops3-app-1:./tmp/output ./
+        - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./output
+          publish_branch: output
+```
+
+The complete workflow file is now
+
+```yaml
+name: A workflow for my Hello World App
+on: push
+
+jobs:
+  build:
+    name: Hello world action
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'adopt'
+      - name: Package with Maven
+        run: mvn package
+      - name: Run docker compose
+        run: docker compose up --abort-on-container-exit
+      - name: view logs
+        run: docker logs devops3-app-1
+      # copy from docker container back to our execution environment  
+      - name: Copy Output
+        run: docker container cp devops3-app-1:./tmp/output ./
+      # check files on actions environment run: | 
+      # allows multiple commands
+      - name: List dirs
+        run: |
+          pwd
+          ls
+      #copy output folder to new branch called output
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./output
+          publish_branch: output
+
+```
+
