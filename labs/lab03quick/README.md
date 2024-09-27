@@ -20,13 +20,10 @@ This cut down version of parts of labs 2 & 3a and covers
 Create a folder db and inside create a file Dockerfile and add the following
 
 ```dockerfile
-# Use the latest MySQL image
-# FROM mysql
-# or use the following image which solves issues on a Mac. Works on Windows also
-FROM mysql/mysql-server
+FROM mysql:latest
 COPY world.sql /docker-entrypoint-initdb.d
 ENV MYSQL_ROOT_PASSWORD example
-#Yet another Mac Fix
+# Mac Fix
 ENV MYSQL_ROOT_HOST=%
 ```
 Download the world database from https://downloads.mysql.com/docs/world-db.zip. Extract the world.sql file to the same directory as the Dockerfile
@@ -245,16 +242,13 @@ add a file called `docker-compose.yml` in the root of your project and add the f
 ```yml
 version: '3'
 services:
-  # Build app from Dockerfile in same folder as this file which is indicated by
-  # the full stop
+  # Build app from Dockerfile in same folder
   app:
     build: .
 
   # Build the db as name world from the Dockerfile in the db folder
   world:
-    build: db/.
-    command: --default-authentication-plugin=mysql_native_password
-    restart: always
+    build: db/.    
     # keep port forwarding so we can test app locally without docker
     ports:
       - "33060:3306"
