@@ -20,15 +20,15 @@ This cut down version of parts of labs 2 & 3a and covers
 Create a folder db and inside create a file Dockerfile and add the following
 
 ```dockerfile
-FROM mysql:latest
+FROM mysql/mysql-server:latest
 COPY world.sql /docker-entrypoint-initdb.d
 ENV MYSQL_ROOT_PASSWORD example
-# Mac Fix
+#Yet another Mac Fix
 ENV MYSQL_ROOT_HOST=%
 ```
 Download the world database from https://downloads.mysql.com/docs/world-db.zip. Extract the world.sql file to the same directory as the Dockerfile
 
-![project structure](img\struc.png)
+![project structure](img/struc.png)
 
 Build an image called world from the command line using the Dockerfile in the folder db
 
@@ -151,9 +151,9 @@ public class App {
 				Integer population = rset.getInt("population");
 				sb.append(name + "\t" + population + "\r\n");
 			}
-			new File("./tmp/").mkdir();
+			new File("./output/").mkdir();
 			BufferedWriter writer = new BufferedWriter(
-					new FileWriter(new File("./tmp/report1.txt")));
+					new FileWriter(new File("./output/report1.txt")));
 			writer.write(sb.toString());
 			writer.close();
 			System.out.println(sb.toString());
@@ -162,12 +162,7 @@ public class App {
 			System.out.println("Failed to get details");
 			return;
 		}
-        // write to file
-		new File("./output/").mkdir();
-		BufferedWriter writer = new BufferedWriter(
-				new FileWriter(new File("./tmp/report1.txt")));
-		writer.write(sb.toString());
-		writer.close();
+        
 		System.out.println(sb.toString());
 	}
 
@@ -231,7 +226,7 @@ public class App {
 
 If we run this code locally (not from docker) then it will connect on port 33060
 
-However,  want our application to communicate with the database from within a separate docker container.
+However, we want our application to communicate with the database from within a separate docker container.
 
 The original version of Lab02 & 3 shows how to set up a docker network and run different containers on that network to facilitate communications. However a much easier method is to use docker-compose which is a docker utility that can be used to start multiple images that are automatically able to communicate.
 
@@ -319,9 +314,9 @@ Get the container ID (long hash) by right click on the container
 
 mine is `ef389599faf1c3f62f3d8df004c8d35652712757b8027ad77d46649fd569c60b`
 
-or we can use the container name
+or we can use the container name as it is shown on the service tab in IntelliJ
 ```shell
-docker cp devops_app_1:/tmp/output/ ./output
+docker cp devops3_app_1:/tmp/output/ ./output
 ```
 
 This should copy the files back to our project in a folder called output (you might want to add this folder to .gitignore)
@@ -359,7 +354,17 @@ So change the View Logs entry in the actions script to
     run: docker logs devops3-app-1
 ```
 
-We can also add actions to copy the report we generated inside docker back to a branch on our repository
+We can also add actions to copy the report we generated inside docker back to a branch on our repository. You will need to give GitHub Actions write permissions on your repository 
+
+Go to your repository settings and on  the left hand menu select actions -> general
+
+![output](img/permissions.png)
+
+At the bottom give actions read write permissions
+
+![output](img/permissions2.png)
+
+To copy the output directory from inside the docker container to the GitHub Actions environment then to a new branch on your repository add the following
 
 ```yaml
         - name: Copy Output
@@ -399,8 +404,8 @@ jobs:
       # copy from docker container back to our execution environment  
       - name: Copy Output
         run: docker container cp devops3-app-1:./tmp/output ./
-      # check files on actions environment run: | 
-      # allows multiple commands
+      # check files on actions environment 
+      # run: | allows multiple commands
       - name: List dirs
         run: |
           pwd
@@ -415,3 +420,8 @@ jobs:
 
 ```
 
+
+
+- Add changes to git
+- Commit changes
+- Push to GitHub 
