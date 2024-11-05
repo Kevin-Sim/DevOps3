@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.*;
+import java.util.ArrayList;
 
 public class App {
 
@@ -22,13 +23,43 @@ public class App {
 			a.connect(args[0], Integer.parseInt(args[1]));
 		}
 
+		a.printCityReport(a.getCities());
 		a.report2();
 
 		// Disconnect from database
 		a.disconnect();
 	}
 
-	public void report2() throws IOException {
+	public ArrayList<City> getCities() {
+		ArrayList<City> cities = new ArrayList<>();
+		try {
+
+			// Create an SQL statement
+			Statement stmt = con.createStatement();
+			// Create string for SQL statement
+			String sql = "select * from city";
+			// Execute SQL statement
+			ResultSet rset = stmt.executeQuery(sql);
+			//cycle
+			while (rset.next()) {
+				Integer id = rset.getInt("ID");
+				String name = rset.getString("Name");
+				String countryCode = rset.getString("CountryCode");
+				String district = rset.getString("District");
+				Integer population = rset.getInt("Population");
+				City city = new City(id, name, countryCode, district, population);
+				cities.add(city);
+			}
+
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			System.out.println("Failed to get details");
+			return null;
+		}
+		return  cities;
+	}
+
+	public void report2() {
 		StringBuilder sb = new StringBuilder();
 		try {
 			// Create an SQL statement
@@ -53,8 +84,9 @@ public class App {
 			System.out.println(e.getMessage());
 			System.out.println("Failed to get details");
 			return;
-		}				
+		}
 	}
+
 
 	/**
 	 * Connect to the MySQL database.
@@ -107,6 +139,16 @@ public class App {
 			} catch (Exception e) {
 				System.out.println("Error closing connection to database");
 			}
+		}
+	}
+
+	public void printCityReport(ArrayList<City> cities){
+		if(cities == null){
+			System.out.println("No cities found");
+			return;
+		}
+		for(City city : cities){
+			System.out.println(city);
 		}
 	}
 }
