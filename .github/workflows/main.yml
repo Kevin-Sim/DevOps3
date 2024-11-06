@@ -13,10 +13,12 @@ jobs:
         with:
           java-version: '17'
           distribution: 'adopt'
-      - name: Package with Maven
-        run: mvn package
-      - name: Run docker compose
-        run: docker compose up --abort-on-container-exit
+      - name: Unit Tests
+        run: mvn -Dtest=com.napier.devops.AppTest test
+      - name: Package and Run docker compose
+        run: |
+          mvn package -DskipTests
+          docker compose up --abort-on-container-exit
       - name: view logs
         run: docker logs devops3-app-1
       - name: Copy Output
