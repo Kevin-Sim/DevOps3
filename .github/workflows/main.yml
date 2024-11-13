@@ -3,7 +3,7 @@ on: push
 
 jobs:
   UnitTests:
-    name: Test Build Action
+    name: Unit Test Build Action
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout
@@ -16,7 +16,7 @@ jobs:
       - name: Unit Tests
         run: mvn -Dtest=com.napier.devops.AppTest test
   IntegrationTests:
-    name: Test Build Action
+    name: Integration Test Build Action
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout
@@ -44,18 +44,7 @@ jobs:
           mvn package -DskipTests
           docker compose up --abort-on-container-exit
       - name: view logs
-        run: docker logs devops3-app-1
-  Deploy:
-    name: Deploy back to GitHub
-    runs-on: ubuntu-20.04
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Set up JDK 17
-        uses: actions/setup-java@v4
-        with:
-          java-version: '17'
-          distribution: 'adopt'   
+        run: docker logs devops3-app-1 
       - name: Copy Output
         run: docker container cp devops3-app-1:./tmp/output ./
       - name: List dirs
