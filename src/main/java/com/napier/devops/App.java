@@ -25,6 +25,7 @@ public class App {
 		}
 
 		a.printCityReport(a.getCities());
+		a.report2();
 
 		// Disconnect from database
 		a.disconnect();
