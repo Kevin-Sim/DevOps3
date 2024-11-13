@@ -27,7 +27,13 @@ jobs:
           java-version: '17'
           distribution: 'adopt'
       - name: Integration Tests
-        run: mvn -Dtest=com.napier.devops.AppTest test
+        run: |
+          docker build -t database ./db 
+          docker run --name world -dp 33060:3306 database
+          mvn -Dtest=com.napier.devops.AppIntegrationTest test
+          docker stop world
+          docker rm world
+          docker image rm database     
   Build:
     name: Build and Start Using docker-compose
     runs-on: ubuntu-20.04
