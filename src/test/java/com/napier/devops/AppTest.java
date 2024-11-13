@@ -2,6 +2,7 @@ package com.napier.devops;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -35,5 +36,11 @@ public class AppTest {
 		city = new City(460, "Edinburgh", "GBR", "Scotland", 450180);
 		cities.add(city);
 		app.printCityReport(cities);
+	}
+
+	@Test
+	void getCityId() {
+		City city = new City(458, "Glasgow", "GBR", "Scotland", 619680);
+		assertEquals(458, city.getId());
 	}
 }
