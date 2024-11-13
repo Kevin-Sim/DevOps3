@@ -57,9 +57,17 @@ jobs:
         run: |
           pwd
           ls
-      - name: Deploy
+      - name: Deploy to Branch
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./output
           publish_branch: output
+      - name: Release On GitHub
+        uses: "marvinpinto/action-automatic-releases@latest"
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          prerelease: false
+          automatic_release_tag: "latest"
+          files: |
+            ./target/*.jar
