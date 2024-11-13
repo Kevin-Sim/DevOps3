@@ -379,7 +379,9 @@ public class AppIntegrationTest
 	static void init()
 	{
 		app = new App();
-		app.connect("localhost:33060", 0);
+		// if running locally delay can be zero if database is running
+        // To work on GitHub Actions set the delay to 10000 as the database takes a while to build
+		app.connect("localhost:33060", 10000);
 
 	}
 

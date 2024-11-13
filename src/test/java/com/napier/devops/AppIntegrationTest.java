@@ -12,7 +12,7 @@ public class AppIntegrationTest
 	static void init()
 	{
 		app = new App();
-		app.connect("localhost:33060", 0);
+		app.connect("localhost:33060", 10000);
 
 	}
 
