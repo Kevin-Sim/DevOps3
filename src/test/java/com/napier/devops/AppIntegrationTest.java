@@ -2,10 +2,6 @@ package com.napier.devops;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
-
-import java.util.ArrayList;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 public class AppIntegrationTest
@@ -16,16 +12,15 @@ public class AppIntegrationTest
 	static void init()
 	{
 		app = new App();
-		app.connect("localhost:33060", 10000);
+		app.connect("localhost:33060", 0);
 
 	}
 
 	@Test
-	void testGetCities()
+	void testGetCity()
 	{
-		ArrayList<City> cities = app.getCities();
-		City city = cities.get(0);
-		assertEquals(city.getId(), 1);
-		assertEquals(city.getName(), "Kabul");
+		City city = app.getCity(1);
+		assertEquals("Kabul", city.getName());
+		System.out.println("successfully retrieved " + city);
 	}
 }

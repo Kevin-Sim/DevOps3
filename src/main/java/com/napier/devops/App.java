@@ -13,6 +13,7 @@ public class App {
 	 * Connection to MySQL database.
 	 */
 	private Connection con = null;
+
 	public static void main(String[] args) throws IOException {
 		// Create new Application
 		App a = new App();
@@ -24,7 +25,6 @@ public class App {
 		}
 
 		a.printCityReport(a.getCities());
-		a.report2();
 
 		// Disconnect from database
 		a.disconnect();
@@ -57,6 +57,34 @@ public class App {
 			return null;
 		}
 		return  cities;
+	}
+
+	public City getCity(int id) {
+		City city = null;
+		try {
+
+			// Create an SQL statement
+			Statement stmt = con.createStatement();
+			// Create string for SQL statement
+			String sql = "select * from city where ID = " + id;
+			// Execute SQL statement
+			ResultSet rset = stmt.executeQuery(sql);
+			//cycle
+			if (rset.next()) {
+				String name = rset.getString("Name");
+				String countryCode = rset.getString("CountryCode");
+				String district = rset.getString("District");
+				Integer population = rset.getInt("Population");
+				city = new City(id, name, countryCode, district, population);
+
+			}
+
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			System.out.println("Failed to get details");
+			return null;
+		}
+		return  city;
 	}
 
 	public void report2() {
