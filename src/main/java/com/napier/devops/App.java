@@ -28,11 +28,15 @@ public class App {
 		if (args.length < 1) {
 			connect("localhost:33060", 0);
 		} else {
+			//connect via docker or actions
 			connect(args[0], 10000);
+			report2();
+			//needed on actions else runs forever
+			System.exit(-1);
 		}
 
 		SpringApplication.run(App.class, args);
-		report2();
+
 	}
 
 	@RequestMapping("cities")
