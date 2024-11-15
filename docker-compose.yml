@@ -1,11 +1,21 @@
 version: '3'
 services:
   # Build app from Dockerfile in same folder
+  # Access via http://localhost:8080/city?id=1
   app:
     build: .
-
+    ports:
+      - "8080:8080"
   # Build the db as name world from the Dockerfile in the db folder
   world:
     build: db/.
     ports:
       - "33060:3306"
+
+  # Access via http://localhost/app/city?id=10
+  # or using the custom page city_id
+  # http://localhost/city_id.html?id=99
+  web:
+    build: web/.
+    ports:
+      - "80:80"
