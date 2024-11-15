@@ -31,7 +31,8 @@ public class App {
 			//connect via docker or actions
 			connect(args[0], 10000);
 			report2();
-			//needed on actions else runs forever
+			//needed on actions else build runs forever
+			// changed added dummy container that sleeps for a min then exits so actions works
 			//System.exit(0);
 		}
 

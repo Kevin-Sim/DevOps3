@@ -15,6 +15,10 @@ services:
   # Access via http://localhost/app/city?id=10
   # or using the custom page city_id
   # http://localhost/city_id.html?id=99
+  # or for cities
+  # http://localhost/app/cities
+  # or using the custom page cities
+  # http://localhost/cities.html
   web:
     build: web/.
     ports:
