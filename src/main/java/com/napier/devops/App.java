@@ -32,7 +32,7 @@ public class App {
 			connect(args[0], 10000);
 			report2();
 			//needed on actions else runs forever
-			System.exit(-1);
+			System.exit(0);
 		}
 
 		SpringApplication.run(App.class, args);
