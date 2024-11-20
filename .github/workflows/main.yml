@@ -17,16 +17,15 @@ jobs:
         run: mvn -Dtest=com.napier.devops.AppTest test
       - name: List dirs
         run: |
-          cd ./target/site
+          cd ./target/site/jacoco
           pwd
           ls
       - name: CodeCov
         uses: codecov/codecov-action@v4
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          directory: ./target/site/jacoco
-          flags: Integration Tests # optional
-          verbose: true # optional (default = false)
+#          directory: ./target/site/jacoco
+#          verbose: true # optional (default = false)
   IntegrationTests:
     name: Integration Test Build Action
     runs-on: ubuntu-20.04
