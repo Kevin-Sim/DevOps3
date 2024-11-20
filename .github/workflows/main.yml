@@ -15,6 +15,11 @@ jobs:
           distribution: 'adopt'
       - name: Unit Tests
         run: mvn -Dtest=com.napier.devops.AppTest test
+      - name: List dirs
+        run: |
+          cd ./target/site
+          pwd
+          ls
       - name: CodeCov
         uses: codecov/codecov-action@v4
         with:
