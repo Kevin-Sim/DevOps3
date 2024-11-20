@@ -19,7 +19,7 @@ jobs:
         run: |
           cd ./target/site/jacoco
           pwd
-          ls 
+          ls
       - name: CodeCov
         uses: codecov/codecov-action@v4
         with:
@@ -45,6 +45,10 @@ jobs:
           docker stop world
           docker rm world
           docker image rm database
+      - name: CodeCov
+        uses: codecov/codecov-action@v4
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
   Build:
     name: Build and Start Using docker-compose
     runs-on: ubuntu-20.04
