@@ -28,5 +28,7 @@ public class AppIntegrationTest
 		ArrayList<City> cities = app.getCity(String.valueOf(1));
 		assertEquals("Kabul", cities.get(0).getName());
 		System.out.println("successfully retrieved " + cities.get(0));
+
+		App.report2();
 	}
 }
