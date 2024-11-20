@@ -19,15 +19,14 @@ public class AppIntegrationTest
 
 	}
 
-	@Test
 	/**
 	 * There are 4079 cities indexed by id 1 - 4049
 	 */
+	@Test
 	void testGetCity()
 	{
 		ArrayList<City> cities = app.getCity(String.valueOf(1));
 		assertEquals("Kabul", cities.get(0).getName());
 		System.out.println("successfully retrieved " + cities.get(0));
 	}
-
 }
