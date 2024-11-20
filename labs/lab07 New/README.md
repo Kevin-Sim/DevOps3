@@ -505,6 +505,10 @@ We need Maven to generate reports for us.  There are different plugins that can 
 
 That is all we have to do in our Maven file.  Everything else is automated.
 
+## Needs updated 
+
+yaml now uses a python script needs npm install
+
 ### Updating `.main.yml` to Upload Code Coverage
 
 We will add another action to the Integration Test stage of our GitHub Actions `main.yml` file to upload the coverage reports created during the maven test stage to codecov. 

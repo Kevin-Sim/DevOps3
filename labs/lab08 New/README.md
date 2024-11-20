@@ -15,30 +15,32 @@ We have already seen how to generate a release on GitHub manually. GitHub action
 We are going to modify our existing *build* stage in our GitHub Actions script so it pushes the built JAR file to GitHub Releases.  We could add this as a separate stage but as the build stage already creates a jar file we will append our deployment action at the end of the stage.
 
 ```yml
-      build:
-    name: Build Run in Docker and Deploy Release
+  Build:
+    name: Build and Start Using docker-compose
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        with:
-          submodules: recursive
       - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
           java-version: '17'
-          distribution: 'adopt'
+          distribution: 'adopt'   
       - name: Package and Run docker compose
         run: |
           mvn package -DskipTests
           docker compose up --abort-on-container-exit
-      - uses: "marvinpinto/action-automatic-releases@latest"
+      - name: view logs
+        run: docker logs devops3-app-1 
+      - name: Release On GitHub
+        uses: "marvinpinto/action-automatic-releases@latest"
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
           prerelease: false
           automatic_release_tag: "latest"
           files: |
             ./target/*.jar
+
 
 ```
 
@@ -52,84 +54,66 @@ Let us consider the steps GitHub Actions will go through:
     
     - Copy any jar files from our target directory to GitHub Releases
 
-For reference, the complete `main.yml` file is below:
+For reference, the complete `main.yml` file is below: 
+
+#### TODO codecov steps removed for now need updated in lab07
 
 ```yml
-name: A workflow for my Hello World App
-on:
-  push:
-    branches:
-      - master
+name: A workflow for my App
+on: push
+
 jobs:
   UnitTests:
-    name: Unit Tests
+    name: Unit Test Build Action
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
         with:
-          submodules: recursive
-      - name: Set up JDK 11
-        uses: actions/setup-java@v2
-        with:
-          java-version: '11'
+          java-version: '17'
           distribution: 'adopt'
       - name: Unit Tests
         run: mvn -Dtest=com.napier.devops.AppTest test
-      - name: CodeCov
-        uses: codecov/codecov-action@v2
-        with:
-          # token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos 
-          directory: ./target/site/jacoco
-          flags: Unit Tests # optional
-          verbose: true # optional (default = false)
-
   IntegrationTests:
-    name: Integration Tests
+    name: Integration Test Build Action
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
         with:
-          submodules: recursive
-      - name: Set up JDK 11
-        uses: actions/setup-java@v2
-        with:
-          java-version: '11'
+          java-version: '17'
           distribution: 'adopt'
-      - name: Integration Tests and CodeCov
+      - name: Integration Tests
         run: |
           docker build -t database ./db 
-          docker run --name employees -dp 33060:3306 database
-          mvn -Dtest=com.napier.devops.AppIntegrationTest test          
-          docker stop employees
-          docker rm employees
-          docker image rm database                    
-      - name: CodeCov
-        uses: codecov/codecov-action@v2
-        with:
-          # token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
-          directory: ./target/site/jacoco
-          flags: Integration Tests # optional
-          verbose: true # optional (default = false)
-  build:
-    name: Build Run in Docker and Deploy Release
+          docker run --name world -dp 33060:3306 database
+          mvn -Dtest=com.napier.devops.AppIntegrationTest test
+          docker stop world
+          docker rm world
+          docker image rm database
+  Build:
+    name: Build and Start Using docker-compose
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
         with:
-          submodules: recursive
-      - name: Set up JDK 11
-        uses: actions/setup-java@v2
-        with:
-          java-version: '11'
-          distribution: 'adopt'
+          java-version: '17'
+          distribution: 'adopt'   
       - name: Package and Run docker compose
         run: |
           mvn package -DskipTests
           docker compose up --abort-on-container-exit
-      - uses: "marvinpinto/action-automatic-releases@latest"
+      - name: view logs
+        run: docker logs devops3-app-1 
+      - name: Release On GitHub
+        uses: "marvinpinto/action-automatic-releases@latest"
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
           prerelease: false
@@ -232,7 +216,7 @@ The complete Maven file is shown below for reference.
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.8.2</version>
+                <version>0.8.12</version>
                 <executions>
                     <execution>
                         <goals>
@@ -407,7 +391,7 @@ Now add the following to our `<dependencies>` section:
 </dependency>
 ```
 
-We also need to change how Maven packages our application.  Change the `<artifactId>maven-assembly-plugin</artifactId>` section in the `<plugins>` section to:
+We also need to change how Maven packages our application. After the `<artifactId>maven-assembly-plugin</artifactId>` section in the `<plugins>` section add:
 
 ```xml
 <plugin>
@@ -786,4 +770,4 @@ The key part is the `<script>` tag at the bottom:
 
 ![Web Table Output](img/web-table-output.PNG)
 
-
+Tidy push etc
