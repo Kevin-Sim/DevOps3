@@ -15,6 +15,13 @@ jobs:
           distribution: 'adopt'
       - name: Unit Tests
         run: mvn -Dtest=com.napier.devops.AppTest test
+      - name: CodeCov
+        uses: codecov/codecov-action@v4
+        with:
+          # token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
+          directory: ./target/site/jacoco
+          flags: Unit Tests # optional
+          verbose: true # optional (default = false)
   IntegrationTests:
     name: Integration Test Build Action
     runs-on: ubuntu-20.04
@@ -33,7 +40,15 @@ jobs:
           mvn -Dtest=com.napier.devops.AppIntegrationTest test
           docker stop world
           docker rm world
-          docker image rm database     
+          docker image rm database
+      - name: CodeCov
+        uses: codecov/codecov-action@v4
+        with:
+          # token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
+          directory: ./target/site/jacoco
+          flags: Unit Tests # optional
+          verbose: true # optional (default = false)
+
   Build:
     name: Build and Start Using docker-compose
     runs-on: ubuntu-20.04

@@ -24,6 +24,7 @@ services:
     ports:
       - "80:80"
 
-  # dummy container so that one exits and actions doesnt keep running
+  # dummy container so that one exits and actions doesn't keep running
+  # Dockerlile entrypoint is 1-min sleep
   dummy:
     build: dummy/.
